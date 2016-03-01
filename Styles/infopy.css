@@ -1,0 +1,171 @@
+﻿/************* BEGINING OF ESSENTIAL CSS *************/
+* 
+{ 
+    /* Overrides browser defaults */
+    margin: 0px;
+    padding: 0px;
+    font-family: Tahoma, Sans-Serif, Arial;
+}
+
+img
+{
+    border-style: none;
+    display:block;
+}
+
+div, header, section, footer, aside, nav, article, hgroup, form
+{
+    /* Helps with IE7 and 8 compatibility */
+    display: block;
+}
+
+body
+{
+    margin: auto; /* Centers the webpage */
+    background: white;
+}
+
+/************* END OF ESSENTIAL CSS *************/
+
+#app-wrapper
+{
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+    font-size: 13px;
+}
+
+#view-wrapper
+{
+    clear: both;
+    background: #9CC2F1;
+    padding: 10px;
+}
+
+.tab-link-container
+{
+}
+
+.tab-link
+{
+    float:left;
+    height: 24px;
+    line-height: 22px;
+    background-color: #D2DFEF;
+    padding: 0px 10px 0px 10px;
+    border-left: 1px solid #c6c6c6;
+    border-right: 1px solid #c6c6c6;
+}
+
+.tab-link a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.selected-tab-link
+{
+    background-color: #9CC2F1;
+}
+
+
+.view-title
+{
+    font-size: 18px;
+}
+
+.information-box
+{
+    height: 300px;
+    background: white;
+    margin: 10px 0px 10px 0px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.break-words
+{
+    word-wrap: break-word;
+    white-space: pre;
+}
+
+.change-text
+{
+    background-color: #5585D5;
+    background-color: #0858D1;
+    color: white;
+    padding: 0px 1px 0px 1px;
+}
+
+.match
+{
+    background: #6472D1;
+    background: #74CC98;
+    background: #BDCCC2;
+    margin: 0px 1px 0px 1px;
+}
+
+.word
+{
+    background: #9DCCAF;
+    margin: 0px 1px 0px 1px;
+}
+
+.delimiter
+{
+    color: #BFBFBF;
+}
+
+.match-and-word
+{
+    background: #D2DFEF;
+    margin: 0px 1px 0px 1px;
+}
+
+.rightside-button-container
+{
+    float: right;
+}
+
+button
+{
+    border: 1px solid #C6C6C6;
+    height: 24px;
+    line-height: 22px;
+    padding: 0px 12px 0px 12px;
+    color: Black;
+    font-size: 12px;
+    background-color: rgb(245, 245, 245);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    background-image: linear-gradient(to bottom, #FFFFFF 0%, #C9CACA 100%);
+}
+
+button:hover {
+	text-decoration: none;
+    -webkit-transition: background-image 0.1s linear;
+    -moz-transition: background-image 0.1s linear;
+    -o-transition: background-image 0.1s linear;
+    transition: background-image 0.1s linear;
+    background-image: linear-gradient(to bottom, #FFFFFF 0%, #EDEDED 100%);/* for IE */
+}
+
+button:active
+{
+    text-decoration: none;
+    -webkit-transition: background-image 0.1s linear;
+    -moz-transition: background-image 0.1s linear;
+    -o-transition: background-image 0.1s linear;
+    transition: background-image 0.1s linear;
+    background-image: linear-gradient(to bottom, #FFFFFF 0%, #C9CACA 100%);/* for IE */
+}
+
+.information-group
+{
+    margin: 10px 0px 0px 0px;
+}
+

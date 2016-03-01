@@ -1,0 +1,19 @@
+﻿<div class="view" ng-controller="wordsCtrl">
+   <div class="view-title">Entropy based on words</div>
+    <div class="information-box break-words"><div ng-bind-html="formattedText"></div></div>
+    <button ng-click="makeChange()">Make Change</button>
+    <button id="mcc" ng-click="makeContinuousChanges()">Make Continuous Changes</button>
+    <div class="rightside-button-container">
+        <button ng-click="scrambleText()">Scramble</button>
+        <button ng-click="makeRandomText()">Random</button>
+        <button ng-click="makeOrganizedText()">Organized</button>
+    </div>
+    <div class="information-group">
+        <div>Entropy: {{ entropy | number : 5}}</div>
+    </div>
+    <div class="information-group">
+        <div>Normalized entropy: {{ normalizedEntropy }}</div>
+        <div>Maximum normalized entropy: {{ maximumEntropy }}</div>
+        <div>Minimum normalized entropy since max {{ minimunEntropySinceMax }}</div>
+    </div>
+</div>

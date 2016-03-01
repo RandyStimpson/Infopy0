@@ -1,0 +1,19 @@
+﻿<div class="view" ng-controller="positionalEntropyCtrl">
+    <div class="view-title">Positional entropy</div> 
+    <div class="information-box">{{ info1 }}<span class="change-text">{{ changeText }}</span>{{ info2 }}</div>
+    <button ng-click="makeChange()">Make Change</button>
+    <button id="mcc" ng-click="makeContinuousChanges()">Make Continuous Changes</button>
+    <div class="rightside-button-container">
+        <button ng-click="scrambleText()">Scramble</button>
+        <button ng-click="orderText()">Order</button>
+        <button ng-click="resetText()">Reset</button>
+    </div>
+    <div class="information-group">
+        <div>Entropy: {{ entropy | number : 6 }}</div>
+        <div>Change in entropy: {{ changeInEntropy | number : 6 }} </div>
+    </div>
+    <div class="information-group">
+        <div>How often entropy (increased, decreased) during the first 100 changes: {{ increasesDuringTheFirst100Changes }}, {{ decreasesDuringTheFirst100Changes }}</div>
+        <div>How often entropy (increased, decreased) during the last 100 changes: {{ increasesDuringTheLast100Changes }}, {{ decreasesDuringTheLast100Changes }}</div>
+    </div>
+ </div>

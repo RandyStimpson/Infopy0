@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html ng-app="infopy">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <title>Entropy and Information</title>
+    <link rel="stylesheet" href="styles/infopy.css" />  
+</head>
+<body>
+<div id="app-wrapper">
+    <div class="tab-link-container">
+        <div id="tab-positional" = class="tab-link"><a href="#/Positional">Positional</a></div>
+        <div id="tab-design-pattern" class="tab-link"><a href="#/DesignPattern" click="colorTabs('#tab-design-pattern')">Design Pattern</a></div>
+        <div id="tab-words" class="tab-link"><a href="#/Words">Words</a></div>
+    </div>
+    <div id="view-wrapper">
+        <div #id="viewPlaceHolder" ng-view>
+        </div>
+    </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-sanitize.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script type="text/javascript">
+        var app = angular.module("infopy", ['ngRoute', 'ngSanitize']);
+
+        $('#tab-positional').addClass('selected-tab-link');
+        $('.tab-link').click(function () {
+            $('.tab-link').removeClass('selected-tab-link');
+            $(this).addClass('selected-tab-link');
+        });
+    </script>
+
+    <script src="scripts/Router.js"></script>
+    <script src="scripts/UtilityFunctions.js"></script>
+    <script src="scripts/controllers/DesignPattern.js"></script>
+    <script src="scripts/controllers/PositionalEntropy.js"></script>
+    <script src="scripts/controllers/Words.js"></script>
+</body>
+</html>
