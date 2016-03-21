@@ -1,4 +1,4 @@
-﻿/*
+/*
     This module demonstrates a calculation of entropy as it relates a design pattern. Actual information consists of many design patterns
     but for the sake of calculation we will just pick one for the entropy calculation. These are the properties of the pattern:
 
@@ -9,7 +9,7 @@
     EXAMPLES of strings that match the design pattern:
 
         Xqzg.
-        Doesentropyapplytoinformation?
+        Doesentropyapplytoinformation:
         Theprobabilityofarandomstringthislongmatchingthedesignpatternisextremelylow!
 
     For the sake of discussion we will call a string that matches the design patters a Match. A string that does not match the design pattern and
@@ -23,8 +23,9 @@
 */
 app.controller("designPatternCtrl", function ($scope) {
 
-    var characterSet1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.!?";
+    var characterSet1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.!:";
     var characterSet2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var punctuationSet = ".!:";
     var belongsTo = [];
     var normalizingFactor;
 
@@ -182,8 +183,7 @@ app.controller("designPatternCtrl", function ($scope) {
                 formattedText += segmentParts.miss.substr(0, changeIndex - i);
                 formattedText += '<span class="change-text">' + segmentParts.miss.charAt(changeIndex - i) + '</span>';
                 formattedText += segmentParts.miss.substr(changeIndex - i + 1);
-            }
-            else {
+            } else {
                 formattedText += segmentParts.miss;
             }
             i += segmentParts.miss.length;
@@ -194,8 +194,7 @@ app.controller("designPatternCtrl", function ($scope) {
                 formattedText += '<span class="match">' + segmentParts.match.substr(0, changeIndex - i);
                 formattedText += '<span class="change-text">' + segmentParts.match.charAt(changeIndex - i) + '</span>';
                 formattedText += segmentParts.match.substr(changeIndex - i + 1) + '</span>';
-            }
-            else {
+            } else {
                 formattedText += '<span class="match">' + segmentParts.match + '</span>';
             }
             i += segmentParts.match.length;
@@ -212,9 +211,8 @@ app.controller("designPatternCtrl", function ($scope) {
     }
 
     getPunctuationDelimitedSegment = function (text, start) {
-        var punctuationSet = ".!?";
-        var end = start;
 
+        var end = start;
         do {
             var ch = text.substr(end, 1);
             end++;
@@ -234,12 +232,10 @@ app.controller("designPatternCtrl", function ($scope) {
         }
 
         // If the segment doesn't end with a punctuation mark the whole thing is a miss
-        else if (".!?".indexOf(segment.slice(-1)) == -1) {
+        else if (punctuationSet.indexOf(segment.slice(-1)) == -1) {
             result.miss = segment;
             result.match = "";
-        }
-
-        else {
+        } else {
             //Find the index of the first uppercase character of the string going backwards
             var index = segment.length - 1;
             do {
@@ -250,8 +246,7 @@ app.controller("designPatternCtrl", function ($scope) {
             if ((index < 0) || (index == segment.length - 2)) {
                 result.miss = segment;
                 result.match = "";
-            }
-            else {
+            } else {
                 result.miss = segment.substr(0, index);
                 result.match = segment.substr(index);
             }
@@ -274,7 +269,7 @@ app.controller("designPatternCtrl", function ($scope) {
     }
 
     makeRandomMatch = function (size) {
-        return app.makeRandomText(1, "ABCDEFGHIJKLMNOPQRSTUVWXYZ") + app.makeRandomText(size - 2, "abcdefghijklmnopqrstuvwxyz") + app.makeRandomText(1, ".!?");
+        return app.makeRandomText(1, "ABCDEFGHIJKLMNOPQRSTUVWXYZ") + app.makeRandomText(size - 2, "abcdefghijklmnopqrstuvwxyz") + app.makeRandomText(1, punctuationSet);
     }
 
     makeRandomSizedMatch = function () {
@@ -286,4 +281,3 @@ app.controller("designPatternCtrl", function ($scope) {
     init();
 
 });
-
