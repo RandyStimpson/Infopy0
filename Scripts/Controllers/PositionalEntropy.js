@@ -1,4 +1,4 @@
-﻿app.controller("positionalEntropyCtrl", function ($scope) {
+app.controller("positionalEntropyCtrl", function ($scope) {
 
     //Choosing a character set with 64 characters will give us a maximum entropy of 6 bits per character
     var CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz -;:?,.!'123";
@@ -22,10 +22,13 @@
         $scope.changeText = "";
         $scope.changeCount = 0;
         $scope.entropy = $scope.calculateEntropy();
+        $scope.startingEntropy = $scope.entropy;
         $scope.increasesDuringTheFirst100Changes = 0;
         $scope.decreasesDuringTheFirst100Changes = 0;
+        $scope.unchangedDuringTheFirst100Changes = 0;
         $scope.increasesDuringTheLast100Changes = 0;
         $scope.decreasesDuringTheLast100Changes = 0;
+        $scope.unchangedDuringTheLast100Changes = 0;
         $scope.changeType = [];
     }
 
@@ -105,8 +108,10 @@
         if ($scope.changeCount <= 100) {
             if ($scope.changeInEntropy > 0)
                 $scope.increasesDuringTheFirst100Changes++;
-            if ($scope.changeInEntropy < 0)
+            else if ($scope.changeInEntropy < 0)
                 $scope.decreasesDuringTheFirst100Changes++;
+            else
+                $scope.unchangedDuringTheFirst100Changes++;
         }
 
         if ($scope.changeCount > 100) {
@@ -122,8 +127,8 @@
         if ($scope.changeCount <= 100) {
             $scope.increasesDuringTheLast100Changes = $scope.increasesDuringTheFirst100Changes;
             $scope.decreasesDuringTheLast100Changes = $scope.decreasesDuringTheFirst100Changes;
-        }
-        else {
+            $scope.unchangedDuringTheLast100Changes = $scope.unchangedDuringTheFirst100Changes;
+        } else {
             var lastChangeType = $scope.changeType[($scope.changeCount - 1) % 100];
             if (oldestChangeType != lastChangeType) {
                 if (oldestChangeType == 1 && lastChangeType == 0) {
@@ -147,6 +152,7 @@
                     $scope.decreasesDuringTheLast100Changes--;
                 }
             }
+            $scope.unchangedDuringTheLast100Changes = 100 - $scope.increasesDuringTheLast100Changes - $scope.decreasesDuringTheLast100Changes;
         }
     }
 
