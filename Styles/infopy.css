@@ -187,3 +187,16 @@ td:not(.data) {
 #equation-wrapper {
     margin-top: 10px;
 }
+
+#design-pattern {
+    width: 300px;
+}
+
+#design-pattern-wrapper {
+    margin: 10px 10px 0px 0px;
+    float: right;
+}
+
+.bold-text {
+    font-weight: bold;
+}

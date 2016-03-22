@@ -1,12 +1,17 @@
-﻿<div class="view" ng-controller="designPatternCtrl">
+<div class="view" ng-controller="designPatternCtrl">
     <div class="view-title">Entropy in relation to a design pattern</div>
-    <div class="information-box break-words"><div ng-bind-html="formattedText"></div></div>
+    <div class="information-box break-words">
+        <div ng-bind-html="formattedText"></div>
+    </div>
     <button ng-click="makeChange()">Make Change</button>
     <button id="mcc" ng-click="makeContinuousChanges()">Make Continuous Changes</button>
     <div class="rightside-button-container">
         <button ng-click="scrambleText()">Scramble</button>
         <button ng-click="makeRandomText()">Random</button>
         <button ng-click="makeOrganizedText()">Organized</button>
+    </div>
+    <div id="design-pattern-wrapper">
+        <img id="design-pattern" src="images/Design Pattern.png">
     </div>
     <div class="information-group">
         <div>Entropy: {{ entropy | number : 5}}</div>
@@ -15,5 +20,8 @@
         <div>Normalized entropy: {{ normalizedEntropy }}</div>
         <div>Maximum normalized entropy: {{ maximumEntropy }}</div>
         <div>Minimum normalized entropy since max {{ minimunEntropySinceMax }}</div>
+    </div>
+    <div class="information-group">
+        <span class="bold-text">The Design Pattern Definition:</span> A capital letter, followed by 1 or more lowercase letters and ending with a puctuation mark."
     </div>
 </div>
