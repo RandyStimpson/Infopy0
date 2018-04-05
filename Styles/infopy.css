@@ -35,24 +35,24 @@ body {
 /************* END OF ESSENTIAL CSS *************/
 
 #app-wrapper {
-    width: 600px;
-    height: 600px;
-    margin: 0 auto;
-    font-size: 13px;
+    width: 1200px;
+    margin: 80px auto;
+    font-size: 20px;
 }
 
 #view-wrapper {
     clear: both;
     background: #9CC2F1;
-    padding: 10px;
+    padding: 20px;
+    height: 600px;
 }
 
 .tab-link-container {}
 
 .tab-link {
     float: left;
-    height: 24px;
-    line-height: 22px;
+    height: 40px;
+    line-height: 36px;
     background-color: #D2DFEF;
     padding: 0px 10px 0px 10px;
     border-left: 1px solid #c6c6c6;
@@ -69,7 +69,7 @@ body {
 }
 
 .view-title {
-    font-size: 18px;
+    font-size: 24px;
 }
 
 .information-box {
@@ -119,11 +119,11 @@ body {
 
 button {
     border: 1px solid #C6C6C6;
-    height: 24px;
-    line-height: 22px;
+    height: 30px;
+    line-height: 28px;
     padding: 0px 12px 0px 12px;
     color: Black;
-    font-size: 12px;
+    font-size: 18px;
     background-color: rgb(245, 245, 245);
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
     border-radius: 4px;
@@ -159,7 +159,7 @@ button:active {
 }
 
 .data {
-    width: 70px;
+    width: 100px;
 }
 
 td:not(.data) {
@@ -175,9 +175,17 @@ td:not(.data) {
 }
 
 #entropy-table {
-    margin: 25px 0px 0px 0px;
-    float: right;
-    width: 250px;
+    margin-top: 40px;
+    margin-left: 80px;
+    float: left;
+    width: 300px;
+}
+
+#calulation-results {
+    clear: both;
+    float: left;
+    margin-top: 20px;
+    margin-left: 40px;
 }
 
 #entropy-equation {
@@ -185,15 +193,26 @@ td:not(.data) {
 }
 
 #equation-wrapper {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 #design-pattern {
-    width: 300px;
+    width: 500px;
 }
 
 #design-pattern-wrapper {
-    margin: 10px 10px 0px 0px;
+    margin-top: 20px;
+    margin-right: 40px;
+    float: right;
+    width: 540px;
+}
+
+#design-pattern-entropy {
+    margin-top: 30px;
+    margin-left: 40px;
+}
+
+#estimated-mean {
     float: right;
 }
 

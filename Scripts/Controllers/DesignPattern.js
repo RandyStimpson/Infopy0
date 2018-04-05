@@ -30,21 +30,7 @@ app.controller("designPatternCtrl", function ($scope) {
     var normalizingFactor;
 
     init = function () {
-
-        var text = "";
-        var i = 0;
-
-        for (i = 1; i <= 50; i++) {
-            text += makeRandomSizedMatch();
-        }
-
-        $scope.info = text;
-        $scope.formattedText = formatText($scope.info);
-        $scope.entropy = computeEntropyBasedOnDesignPattern();
-        normalizingFactor = 1 / $scope.entropy;
-        $scope.normalizedEntropy = 1;
-        $scope.maximumEntropy = 1;
-        $scope.minimunEntropySinceMax = 1;
+        $scope.makeRandomText();
     }
 
     $scope.scrambleText = function () {
@@ -61,7 +47,20 @@ app.controller("designPatternCtrl", function ($scope) {
     }
 
     $scope.makeOrganizedText = function () {
-        init();
+        var text = "";
+        var i = 0;
+
+        for (i = 1; i <= 50; i++) {
+            text += makeRandomSizedMatch();
+        }
+
+        $scope.info = text;
+        $scope.formattedText = formatText($scope.info);
+        $scope.entropy = computeEntropyBasedOnDesignPattern();
+        normalizingFactor = 1 / $scope.entropy;
+        $scope.normalizedEntropy = 1;
+        $scope.maximumEntropy = 1;
+        $scope.minimunEntropySinceMax = 1;
     }
 
     $scope.makeChange = function () {
@@ -112,10 +111,13 @@ app.controller("designPatternCtrl", function ($scope) {
     // The probability that a string of length n is a Match
     var pOfMatchLookupTable = [];
     pOfMatch = function (n) {
+        var pOfPunctuation = 3 / characterSet1.length;
+        var pOfLowerCase = 26 / characterSet1.length;
+        var pOfUpperCase = 26 / characterSet1.length;
         if (n <= 2)
             return 0;
         if (pOfMatchLookupTable[n] === undefined)
-            pOfMatchLookupTable[n] = Math.pow(26 / 55, n - 1) * 3 / 55;
+            pOfMatchLookupTable[n] = pOfUpperCase * Math.pow(pOfLowerCase, n - 2) * pOfPunctuation;
         return pOfMatchLookupTable[n];
     }
 
@@ -171,7 +173,9 @@ app.controller("designPatternCtrl", function ($scope) {
         var j;
         var formattedText = "";
         belongsTo = [];
-        var bi = 0;
+        var bi = 0; //belongsToIndex;
+        totalCharactersInMissSegments = 0;
+        totalCharactersInMatchSegments = 0;
 
         do {
             segment = getPunctuationDelimitedSegment(text, i);
@@ -187,6 +191,7 @@ app.controller("designPatternCtrl", function ($scope) {
                 formattedText += segmentParts.miss;
             }
             i += segmentParts.miss.length;
+            totalCharactersInMissSegments += segmentParts.miss.length;
 
             //Format the match portion of the segment
             if (changeIndex >= i && changeIndex < i + segmentParts.match.length) {
@@ -198,6 +203,7 @@ app.controller("designPatternCtrl", function ($scope) {
                 formattedText += '<span class="match">' + segmentParts.match + '</span>';
             }
             i += segmentParts.match.length;
+            totalCharactersInMatchSegments += segmentParts.match.length;
 
             //Compute the values of belongsTo[] so that they can be used in the entropy calculation
             for (j = 0; j < segmentParts.miss.length; j++)
@@ -206,6 +212,9 @@ app.controller("designPatternCtrl", function ($scope) {
                 belongsTo[bi++] = segmentParts.match.length;
 
         } while (i < text.length);
+
+        pOfBeingInMissSegment = totalCharactersInMissSegments / text.length;
+        pOfBeingInMatchSegment = totalCharactersInMatchSegments / text.length;
 
         return formattedText;
     }
@@ -261,8 +270,8 @@ app.controller("designPatternCtrl", function ($scope) {
 
         //TODO can be optimized to reduce calls to Math.log()
         for (i = 0; i <= $scope.info.length; i++) {
-            if (belongsTo[i] < 0) p = pOfMiss(-belongsTo[i]);
-            if (belongsTo[i] > 0) p = pOfMatch(belongsTo[i]);
+            if (belongsTo[i] < 0) p = pOfMiss(-belongsTo[i]) * pOfBeingInMissSegment;
+            if (belongsTo[i] > 0) p = pOfMatch(belongsTo[i]) * pOfBeingInMatchSegment;
             sum += p * Math.log(p);
         }
         return -sum;

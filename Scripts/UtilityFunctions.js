@@ -26,7 +26,7 @@ app.orderText = function (text) {
     }
     txt.sort();
     result = "";
-    for (i = 0; i <= text.length; i++) {
+    for (i = 0; i < text.length; i++) {
         result += txt[i];
     }
     return result;
@@ -42,5 +42,3 @@ app.makeRandomText = function (length, characterSet) {
     }
     return s;
 }
-
-

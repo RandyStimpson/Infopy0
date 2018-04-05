@@ -1,4 +1,7 @@
 <div class="view" ng-controller="positionalEntropyCtrl">
+    <div id="estimated-mean">
+        Estimated mean entropy of random text {{ expectedEntropyOfRandomText | number : 3 }}
+    </div>
     <div class="view-title">Positional entropy</div>
     <div class="information-box">{{ info1 }}<span class="change-text">{{ changeText }}</span>{{ info2 }}</div>
     <button ng-click="makeChange()">Make Change</button>
@@ -7,6 +10,16 @@
         <button ng-click="scrambleText()">Scramble</button>
         <button ng-click="orderText()">Order</button>
         <button ng-click="resetText()">Reset</button>
+    </div>
+    <div id="calulation-results">
+        <div id="equation-wrapper"><img id="entropy-equation" src="images/Entropy Equation.png"></div>
+        <div class="information-group">
+            <div>Starting Entropy: {{ startingEntropy | number : 6 }}</div>
+        </div>
+        <div class="information-group">
+            <div>Current Entropy: {{ entropy | number : 6 }}</div>
+            <div>Change in entropy: {{ changeInEntropy | number : 6 }} </div>
+        </div>
     </div>
     <div id="entropy-table">
         <table>
@@ -30,13 +43,5 @@
                 <td class="data">{{ unchangedDuringTheLast100Changes }}</td>
             </tr>
         </table>
-    </div>
-    <div id="equation-wrapper"><img id="entropy-equation" src="images/Entropy Equation.png"></div>
-    <div class="information-group">
-        <div>Starting Entropy: {{ startingEntropy | number : 6 }}</div>
-    </div>
-    <div class="information-group">
-        <div>Current Entropy: {{ entropy | number : 6 }}</div>
-        <div>Change in entropy: {{ changeInEntropy | number : 6 }} </div>
     </div>
 </div>

@@ -1,0 +1,59 @@
+The design pattern that we want to match must satisfy these properties:
+
+    1) The string begins with a capital letter
+    2) The string ends with a one one the three punctuation marks .!?
+    3) In between are 1 or more lower case letters
+
+Example matching patterns:
+
+    Aezgh.   (denote as a match6)
+    Ha?      (denote as a match3)
+    Xxxx?    (denote as a match5)
+
+Example of string that don't contain a match
+
+    abcAbx   (denote as a miss6)
+    abc      (denote as a miss3)
+    xgH.     
+
+Strings that are not matches and don't contain a match are misses.
+
+Let pmatch(N) be the probability that a string of length is a match.
+
+   Then pmatch(N) = (3/55) * (26/55) ^ (N-1)
+   Note that N if < 3 by definition
+
+What is the probability that a string has length N but does not contain a matching design pattern?
+The probability is less that N
+
+
+What is the probability that a letter belongs to a pattern of length N or a non-pattern of length N
+
+
+Let the alphabet be all lower and upper case letters and three punctuation marks.
+
+The probability of a match3 is 0.012189 = (26/55)*(26/55)*(3/55)
+The probability of a match4 is 0.005762 = (26/55)*(26/55)*(26/55)*(3/55)
+The probability of a match5 is 0.002724
+The probability of a match6 is 0.001288
+The probability of a match7 is 0.000609
+
+
+Suppose you have a miss of length 2 or more. What is the probability that is you add a character is will still be a miss?
+
+pmiss(1) = 1
+pmiss(2) = 1
+pmiss(3) = 1 - pmatch(3)
+pmiss(4) = pmiss(3) 
+
+
+let pattern(N) be a string of N lower case letters followed by an upper case letter. The probability of pattern(N) is
+
+(26/55)^(N+1). 
+
+suffix probability
+
+
+
+
+pmiss(N) = (1-0.012189) ^ (N-2) where N >= 3

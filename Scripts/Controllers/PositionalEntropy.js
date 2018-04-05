@@ -3,25 +3,41 @@ app.controller("positionalEntropyCtrl", function ($scope) {
     //Choosing a character set with 64 characters will give us a maximum entropy of 6 bits per character
     var CHARACTER_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz -;:?,.!'123";
 
-    var text = "EINSTEIN QUOTES: Great spirits have often encountered violent opposition from weak minds.";
-    text += " The important thing is not to stop questioning. Curiosity has its own reason for existing.";
-    text += " I want to know God's thoughts; the rest are details.";
-    text += " Anyone who has never made a mistake has never tried anything new.";
-    text += " Everything should be made as simple as possible, but not simpler.";
-    text += " He who joyfully marches to music rank and file, has already earned my contempt. He has been given a large brain by mistake, since for him the spinal cord would surely suffice. This disgrace to civilization should be done away with at once. Heroism at command, how violently I hate all this, how despicable and ignoble war is; I would rather be torn to shreds than be a part of so base an action. It is my conviction that killing under the cloak of war is nothing but an act of murder.";
-    text += " God is subtle but he is not malicious.";
-    text += " We can't solve problems by using the same kind of thinking we used when we created them.";
-    text += " The only thing that interferes with my learning is my education.";
-    text += " Science without religion is lame. Religion without science is blind.";
+    var startingText = "EINSTEIN QUOTES: Great spirits have often encountered violent opposition from weak minds.";
+    startingText += " The important thing is not to stop questioning. Curiosity has its own reason for existing.";
+    startingText += " I want to know God's thoughts; the rest are details.";
+    startingText += " Anyone who has never made a mistake has never tried anything new.";
+    startingText += " Everything should be made as simple as possible, but not simpler.";
+    startingText += " He who joyfully marches to music rank and file, has already earned my contempt. He has been given a large brain by mistake, since for him the spinal cord would surely suffice. This disgrace to civilization should be done away with at once. Heroism at command, how violently I hate all this, how despicable and ignoble war is; I would rather be torn to shreds than be a part of so base an action. It is my conviction that killing under the cloak of war is nothing but an act of murder.";
+    startingText += " God is subtle but he is not malicious.";
+    startingText += " We can't solve problems by using the same kind of thinking we used when we created them.";
+    startingText += " The only thing that interferes with my learning is my education.";
+    startingText += " Science without religion is lame. Religion without science is blind.";
+
+    //Add space the make text length a multiple of 64 to that a maximum entropy of 6 can is possible
+    startingText += "                                        "
+    console.log(startingText.length % 64);
+
+    // TODO: In order to be able to reach a maximum entropy of 6, the number of text characters needs to be a multiple
+    // of 64, the number of characters in the character set.
+
+    // TODO: Graph the counts of each of the characters in the character set.
+
+    // TODO: Predict how long it would take for entropy go below a certain threshold.
+
+    // TODO: Add a random button.
+
+    // TODO: Predict the percentage of character configration with an entropy less that 5
+
 
     $scope.initialize = function () {
 
-        $scope.info = text;
+        $scope.info = startingText;
         $scope.info1 = $scope.info;
         $scope.info2 = "";
         $scope.changeText = "";
         $scope.changeCount = 0;
-        $scope.entropy = $scope.calculateEntropy();
+        $scope.entropy = $scope.calculateEntropy(CHARACTER_SET, startingText);
         $scope.startingEntropy = $scope.entropy;
         $scope.increasesDuringTheFirst100Changes = 0;
         $scope.decreasesDuringTheFirst100Changes = 0;
@@ -30,6 +46,7 @@ app.controller("positionalEntropyCtrl", function ($scope) {
         $scope.decreasesDuringTheLast100Changes = 0;
         $scope.unchangedDuringTheLast100Changes = 0;
         $scope.changeType = [];
+        $scope.expectedEntropyOfRandomText = $scope.estimateMeanPositionalEntropyOfRandomCharacterSet();
     }
 
     $scope.makeChange = function () {
@@ -48,7 +65,7 @@ app.controller("positionalEntropyCtrl", function ($scope) {
         $scope.info = $scope.info1 + $scope.changeText + $scope.info2;
 
         $scope.oldEntropy = $scope.entropy;
-        $scope.entropy = $scope.calculateEntropy();
+        $scope.entropy = $scope.calculateEntropy(CHARACTER_SET, $scope.info);
         $scope.changeInEntropy = $scope.entropy - $scope.oldEntropy;
         if ($scope.changeInEntropy == 0)
             var same = 1;
@@ -81,22 +98,22 @@ app.controller("positionalEntropyCtrl", function ($scope) {
         $('.information-box').removeClass('break-words');
     }
 
-    $scope.calculateEntropy = function () {
+    $scope.calculateEntropy = function (theCharacterSet, theText) {
         var i;
         var sum = 0;
-        for (i = 0; i < CHARACTER_SET.length; i++)
-            sum += $scope.entropyTerm(CHARACTER_SET.substr(i, 1));
+        for (i = 0; i < theCharacterSet.length; i++)
+            sum += $scope.entropyTerm(theCharacterSet.substr(i, 1), theText);
         return -sum;
     }
 
-    $scope.entropyTerm = function (ch) {
+    $scope.entropyTerm = function (ch, theText) {
         var i;
         var count = 0;
-        for (i = 0; i < $scope.info.length; i++) {
-            if (ch == $scope.info.substr(i, 1))
+        for (i = 0; i < theText.length; i++) {
+            if (ch == theText.substr(i, 1))
                 count++;
         }
-        probability = count / $scope.info.length;
+        probability = count / theText.length;
         if (probability == 0) {
             return 0;
         }
@@ -162,7 +179,7 @@ app.controller("positionalEntropyCtrl", function ($scope) {
         $scope.changeText = "";
         $scope.info = $scope.info1 + $scope.changeText + $scope.info2;
         $scope.oldEntropy = $scope.entropy;
-        $scope.entropy = $scope.calculateEntropy();
+        $scope.entropy = $scope.calculateEntropy(CHARACTER_SET, $scope.info);
         $scope.changeInEntropy = $scope.entropy - $scope.oldEntropy;
     }
 
@@ -172,9 +189,20 @@ app.controller("positionalEntropyCtrl", function ($scope) {
         $scope.info2 = "";
         $scope.info = $scope.info1 + $scope.changeText + $scope.info2;
         $scope.oldEntropy = $scope.entropy;
-        $scope.entropy = $scope.calculateEntropy();
+        $scope.entropy = $scope.calculateEntropy(CHARACTER_SET, $scope.info);
         $scope.changeInEntropy = $scope.entropy - $scope.oldEntropy;
         $('.information-box').addClass('break-words');
+    }
+
+    $scope.estimateMeanPositionalEntropyOfRandomCharacterSet = function () {
+        var sampleSize = 100;
+        var sumOfEntropys = 0;
+
+        for (var i = 0; i < sampleSize; i++) {
+            var randomText = app.makeRandomText(startingText.length, CHARACTER_SET);
+            sumOfEntropys += $scope.calculateEntropy(CHARACTER_SET, randomText);
+        }
+        return sumOfEntropys / sampleSize;
     }
 
     $scope.initialize();
